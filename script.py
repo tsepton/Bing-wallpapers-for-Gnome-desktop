@@ -1,10 +1,14 @@
 from html.parser import HTMLParser
 from urllib.request import urlopen, urlretrieve
 from subprocess import call
+from pathlib import Path
+from datetime import datetime
 import os
 
-bingUrl  = "https://www.bing.com/"
-cwd = os.getcwd()
+
+BING_URL  = "https://www.bing.com/"
+IMAGE_FOLDER = str(Path.home()) + '/Pictures/Bing/'
+DATE = str(datetime.date(datetime.now()))
 
 class BingParser(HTMLParser):
     url = "bing.com/"
@@ -21,18 +25,27 @@ class BingParser(HTMLParser):
         return "https://www.bing.com" + self.image_path
 
 
-def main():
-    parser   = BingParser()
-    response = urlopen(bingUrl)
-    html     = response.read().decode('utf8')
-
-    response.close()
+def set_current_screensaver(parser, html):
     parser.feed(html)
     image_url = parser.get_url()
-    urlretrieve(image_url, cwd + '/bing_image')
 
-    image_path = "'" + cwd + "/bing_image'"
-    call(["gsettings", "set", "org.gnome.desktop.screensaver", "picture-uri", image_path])
+    if not os.path.exists(IMAGE_FOLDER):
+        os.mkdir(IMAGE_FOLDER)
+
+    urlretrieve( image_url, IMAGE_FOLDER + DATE )
+    call(["gsettings", "set", "org.gnome.desktop.screensaver", "picture-uri", IMAGE_FOLDER + DATE])
     #call(['rm', cwd+'/bing_image'])
+
+
+
+def main():
+    parser   = BingParser()
+    response = urlopen(BING_URL)
+    html     = response.read().decode('utf8')
+    response.close()
+
+    set_current_screensaver(parser, html)
+
+
 
 main()
