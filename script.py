@@ -25,7 +25,7 @@ class BingParser(HTMLParser):
         return "https://www.bing.com" + self.image_path
 
 
-def set_current_screensaver(parser, html):
+def set_current_image(parser, html):
     parser.feed(html)
     image_url = parser.get_url()
 
@@ -34,7 +34,7 @@ def set_current_screensaver(parser, html):
 
     urlretrieve( image_url, IMAGE_FOLDER + DATE )
     call(["gsettings", "set", "org.gnome.desktop.screensaver", "picture-uri", IMAGE_FOLDER + DATE])
-    #call(['rm', cwd+'/bing_image'])
+    call(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", IMAGE_FOLDER + DATE])
 
 
 
@@ -44,7 +44,7 @@ def main():
     html     = response.read().decode('utf8')
     response.close()
 
-    set_current_screensaver(parser, html)
+    set_current_image(parser, html)
 
 
 

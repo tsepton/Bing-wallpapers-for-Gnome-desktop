@@ -1,5 +1,5 @@
-# Bing-wallpapers-for-Gnome-screensaver
-This is a simple script to set up the current Bing image of the day as your Gnome screensaver.
+# Bing-wallpapers-for-Gnome-desktop
+This is a simple script to set up the current Bing image of the day as your Gnome screensaver and wallpaper.
 
 ## Installation
 ### Make it run every 6 hours
