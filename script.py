@@ -11,7 +11,7 @@ IMAGE_FOLDER = str(Path.home()) + '/Pictures/Bing/'
 DATE = str(datetime.date(datetime.now()))
 
 class BingParser(HTMLParser):
-    url = "bing.com/"
+    url = BING_URL
     def __init__(self):
         self.image_path = ""
         super().__init__()
@@ -22,7 +22,7 @@ class BingParser(HTMLParser):
             self.image_path = data[0][1]
 
     def get_url(self):
-        return "https://www.bing.com" + self.image_path
+        return BingParser.url + self.image_path
 
 
 def set_current_image(parser, html):
