@@ -22,13 +22,7 @@ class BingParser(HTMLParser):
             background_image = data[0][1]
             background_image = background_image.replace('background-image: url(', '')
             self.image_path = background_image
-            #self.image_path = data[0][1]
-    """ 
-    def handle_starttag(self, tag, attrs):
-        if tag == "div" and ("id", 'bgImgProgLoad') in attrs:
-            data = [tuple for tuple in attrs if "data-ultra-definition-src" in tuple]
-            self.image_path = data[0][1]
-    """
+
     def get_url(self):
         return BingParser.url + self.image_path
 
